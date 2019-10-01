@@ -2,13 +2,25 @@
 class Tomagotchi {
 		constructor(name, hair){
 			this.legs = 4;
+			this.hunger = 0;
+			this.sleepiness = 0;
+			this.boredom = 0;
 			this.name = name;
 			this.color= hair;
+			this.age = 2;
+			
 		}
-	}
-// 		die(){
 
-// 		}
+		greet(person){
+			console.log('Hello, ' + this.person);
+			console.log(`My name is ${this.name}`);
+
+		}
+
+	}
+		// die(){
+
+		// }
 // 		sleep(){
 
 // 		}
@@ -16,9 +28,9 @@ class Tomagotchi {
 
 // 		}
 
-const Jim = new Tomagotchi('Jim','green');
+const jim = new Tomagotchi('Jim','green');
+console.log(jim.greet('bob'));
 
-console.log(Jim);
 const game = {
 
 
