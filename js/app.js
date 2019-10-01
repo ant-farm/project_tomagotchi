@@ -16,9 +16,9 @@ class Tomagotchi {
 
 // 		}
 
-const jim = new Tomagotchi('Jim','green');
+const Jim = new Tomagotchi('Jim','green');
 
-console.log(jim);
+console.log(Jim);
 const game = {
 
 
