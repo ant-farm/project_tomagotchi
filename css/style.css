@@ -5,6 +5,7 @@ body{
 .picture{
 	display: flex;
 	justify-content: center;
+	/*height: 200px;*/
 	/*margin: auto;*/
 
 }

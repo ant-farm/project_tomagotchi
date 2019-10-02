@@ -9,6 +9,12 @@ class Tamagotchi {
 			this.age = 0;
 			
 		}
+
+		kill() {
+
+		}
+
+
 	}
 
 
@@ -17,18 +23,26 @@ const game = {
 
 	time: 0,
 
-	endGame: 20,
+	endGame: 30,
 
 	newTom: null, 
 
 	isAlive: true,
 
 
+
 	createTamagotchi(name){
 		this.newTom = new Tamagotchi(name);
-		console.log(this.newTom);
+		// console.log(this.newTom);
 
 
+		this.printStuff()
+
+
+		this.startTimer();
+	},
+
+	printStuff() {
 		$('.hunger').text('Hunger level: ')
 		$('.hunger').append(this.newTom.hunger)
 		$('.sleepiness').text('Sleepiness level: ')
@@ -37,8 +51,9 @@ const game = {
 		$('.boredom').append(this.newTom.boredom)
 		$('.timer').text('Timer: ')
 		$('.timer').append(this.newTom.time)
+		$('.age').text('Age: ')
+		$('.age').append(this.newTom.age)
 
-		game.startTimer();
 	},
 
 
@@ -46,7 +61,15 @@ const game = {
 		let $timer = $('.timer')
 
 		let interval = setInterval (() => {
-			if(this.time === this.endGame ){
+			this.animate();
+			this.feedingTime();
+			this.deadOfSleepiness();
+			this.ageAmount();
+			this.deadOfBoredom();
+
+
+
+			if(this.time === this.endGame) {
 				clearInterval(interval);
 			} else if (!this.isAlive) {
 				clearInterval(interval)
@@ -54,60 +77,65 @@ const game = {
 				this.time += 1
 				// this.age += 1
 			}
-			this.feedingTime();
-			this.lightsOut();
+
 			//update the time on the DOM
 			$timer.text(`Timer: ${this.time}s`)
-		}, 1000)
+
+		}, 500)
 
 	},
 
+	animate(){
+		$('<img>').animate({left: '500px'})
+	},
 
 	feedingTime(feed){
 		if(this.time % 2 === 0){
-			console.log('Feed me!');
-			let $hunger = $('.hunger')
-			$hunger.text('Hunger level: ' + (this.newTom.hunger -= 1));
-			console.log(this.newTom.hunger);
+
+			this.newTom.hunger -= 1
+
 		} else if(this.newTom.hunger === 0){
 			this.died();
-
 		}
-
 	},
 
-	lightsOut(){
-		if(this.time % 3 === 0){
-			console.log('I am tired!');
-			let $light = $('.sleepiness');
-			$light.text('Sleepiness level: ' + (this.newTom.sleepiness -= 1))
-			console.log(this.newTom.sleepiness);
-		} else if (this.newTom.sleepiness === 0){
+	deadOfSleepiness(){
+		
+		if(this.newTom.sleepiness === 0) {
 			this.died();
-		}
-	},
-
-	// lightsOn(){
-	// 	if(this.time % 3 === 0){
-	// 		console.log('I am tired!');
-	// 		let $light = $('.sleepiness');
-	// 		$light.text('Sleepiness level: ' + (this.newTom.sleepiness -= 1))
-	// 		console.log(this.newTom.sleepiness);
-	// 	} else if (this.newTom.sleepiness === 0){
-	// 		this.died();
-	// 	}
-		// to help his sleepiness level. When you turn the light out his level will go down 
-
-	// play(){
-
-	// },
-
-	died(){
-		if(this.newTom.hunger === 0 || this.newTom.sleepiness === 0 || this.newTom.boredom === 0){
-			console.log('Your pet died!');
-			this.newTom.time = 0
 			
 		}
+
+		if(this.time % 3 === 0 && this.time > 0){
+			this.newTom.sleepiness -= 1
+
+		} 
+	},
+
+	ageAmount(){
+		// console.log("ageAmount")
+		if(this.time % 2 === 0){
+			this.newTom.age += 1;
+			this.printStuff();
+		} 
+		else if(this.age === 0){
+			this.died()
+		}
+	},
+
+	deadOfBoredom(){
+		
+		if(this.time % 4 === 0){
+			this.newTom.boredom -= 1;
+			this.printStuff();
+		} else if(this.newTom.boredom === 0){
+			this.died();
+		}
+
+	},
+
+	died(){
+		console.log('Your pet died!');
 		this.isAlive = false
 	}
 };
@@ -120,23 +148,25 @@ $('form').on('submit',(event) => {
 	game.createTamagotchi(input);
 	// input.hide();
 })
+
 $('.feed').on('click', (e) => {
-	console.log('button works!');
+	// console.log('button works!');
 	let $hunger = $('.hunger') 
 	$hunger.text('Hunger level: ' + (game.newTom.hunger += 1));
 })
+
 $('.lightOff').on('click', (e) => {
-	console.log('button works');
+	// console.log('button works');
 	let $light = $('.sleepiness')
 	$light.text('Sleepiness level: ' + (game.newTom.sleepiness += 1));
 	let $img = $('img');
 	$img.css('background-color', 'black')
+
 })
-$('.lightOn').on('click', (e) => {
-	console.log('button works');
-	// let $light = $('.sleepiness')
-	// $light.text('Sleepiness level: ' + (game.newTom.sleepiness += 1));
-	let $img = $('img');
-	$img.css('background-color', 'lightgreen')
+
+$('.play').on('click', (e) => {
+	let $boredom = $('.boredom')
+	$boredom.text('Boredom level: ' + (game.newTom.boredom += 1));
 })
+
 
