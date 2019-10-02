@@ -9,7 +9,6 @@ class Tamagotchi {
 			this.age = 0;
 			
 		}
-
 	}
 
 
@@ -18,9 +17,12 @@ const game = {
 
 	time: 0,
 
-	endGame: 10,
+	endGame: 20,
 
 	newTom: null, 
+
+	isAlive: true,
+
 
 	createTamagotchi(name){
 		this.newTom = new Tamagotchi(name);
@@ -44,53 +46,69 @@ const game = {
 		let $timer = $('.timer')
 
 		let interval = setInterval (() => {
-		
 			if(this.time === this.endGame ){
 				clearInterval(interval);
+			} else if (!this.isAlive) {
+				clearInterval(interval)
 			} else {
 				this.time += 1
+				// this.age += 1
 			}
-
 			this.feedingTime();
-
-
-
+			this.lightsOut();
 			//update the time on the DOM
 			$timer.text(`Timer: ${this.time}s`)
 		}, 1000)
 
 	},
 
-	// create a feeding function. This will be used with an on.click() method down below, outside of the game. Everytime it's clicked the Tomagotchi's hungar level will go up by 1
-	// if it's been the right amount of time to make him hungrier
-			// this.time
-			// increase hunger level
+
 	feedingTime(feed){
 		if(this.time % 2 === 0){
 			console.log('Feed me!');
 			let $hunger = $('.hunger')
-			$hunger.text('Hunger level: ' + (this.newTom.hunger --));
+			$hunger.text('Hunger level: ' + (this.newTom.hunger -= 1));
 			console.log(this.newTom.hunger);
-		} if(this.newTom.hunger === 0){
-			console.log('You lost!');
+		} else if(this.newTom.hunger === 0){
 			this.died();
+
 		}
 
 	},
 
 	lightsOut(){
-		// to help his sleepiness level. When you turn the light out his level will go down 1
+		if(this.time % 3 === 0){
+			console.log('I am tired!');
+			let $light = $('.sleepiness');
+			$light.text('Sleepiness level: ' + (this.newTom.sleepiness -= 1))
+			console.log(this.newTom.sleepiness);
+		} else if (this.newTom.sleepiness === 0){
+			this.died();
+		}
 	},
 
-	play(){
+	// lightsOn(){
+	// 	if(this.time % 3 === 0){
+	// 		console.log('I am tired!');
+	// 		let $light = $('.sleepiness');
+	// 		$light.text('Sleepiness level: ' + (this.newTom.sleepiness -= 1))
+	// 		console.log(this.newTom.sleepiness);
+	// 	} else if (this.newTom.sleepiness === 0){
+	// 		this.died();
+	// 	}
+		// to help his sleepiness level. When you turn the light out his level will go down 
 
-	},
+	// play(){
+
+	// },
 
 	died(){
-		if(this.newTom.hunger === 0 || this.newTom.hunger === 0 || this.newTom.hunger === 0){
+		if(this.newTom.hunger === 0 || this.newTom.sleepiness === 0 || this.newTom.boredom === 0){
 			console.log('Your pet died!');
 			this.newTom.time = 0
+			
 		}
+		this.isAlive = false
 	}
 };
 
@@ -101,12 +119,24 @@ $('form').on('submit',(event) => {
 	const input = $('#input-box').val()
 	game.createTamagotchi(input);
 	// input.hide();
-
+})
 $('.feed').on('click', (e) => {
 	console.log('button works!');
 	let $hunger = $('.hunger') 
 	$hunger.text('Hunger level: ' + (game.newTom.hunger += 1));
 })
-
-});
+$('.lightOff').on('click', (e) => {
+	console.log('button works');
+	let $light = $('.sleepiness')
+	$light.text('Sleepiness level: ' + (game.newTom.sleepiness += 1));
+	let $img = $('img');
+	$img.css('background-color', 'black')
+})
+$('.lightOn').on('click', (e) => {
+	console.log('button works');
+	// let $light = $('.sleepiness')
+	// $light.text('Sleepiness level: ' + (game.newTom.sleepiness += 1));
+	let $img = $('img');
+	$img.css('background-color', 'lightgreen')
+})
 
