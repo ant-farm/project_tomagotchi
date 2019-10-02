@@ -7,26 +7,19 @@ class Tamagotchi {
 			this.boredom = Math.floor(Math.random() * 10) +1;
 			this.name = name;
 			this.age = 0;
-			this.time = 10;
+			// this.time = 10;
 			
 		}
 	}
 
-// time(){
-// 	const $timer = $('.timer')
-
-// 	const interval = setInterval (() => {
-		
-// 		if(this.timer === 10 ){
-// 			clearInterval(interval);
-// 		} else {
-// 			this.timer++
-// 		}
-// 	},1000)
-// },
 
 
 const game = {
+
+	time: 0,
+
+	endGame: 10,
+
 
 	createTamagotchi(name){
 		const newTom = new Tamagotchi(name);
@@ -42,7 +35,24 @@ const game = {
 
 		// $('.timer').append(this.timer())
 
-		// game.timer();
+		game.startTimer();
+	},
+
+
+	startTimer(){
+		let $timer = $('.timer')
+
+		let interval = setInterval (() => {
+		
+			if(this.time === this.endGame ){
+				clearInterval(interval);
+			} else {
+				this.time += 1
+			}
+			//update the time on the DOM
+			$timer.text(`Timer: ${this.time}s`)
+		},1000)
+
 	},
 	// prompt the player by welcoming them to the game and asking they input a name for the Tomagotchi.
 	// userPrompt(){
