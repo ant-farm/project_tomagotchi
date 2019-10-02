@@ -1,3 +1,16 @@
-.tomagotchi{
-	display: center;
+body{
+	background-color: lightgreen;
+}
+
+.picture{
+	display: flex;
+	justify-content: center;
+	/*margin: auto;*/
+
+}
+
+.button {
+	display: flex;
+	justify-content: center;
+	margin-top: 20px;
 }

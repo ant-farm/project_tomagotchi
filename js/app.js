@@ -18,15 +18,7 @@ class Tomagotchi {
 		}
 
 	}
-		// die(){
-
-		// }
-// 		sleep(){
-
-// 		}
-// 		eat(){
-
-// 		}
+	
 
 const jim = new Tomagotchi('Jim','green');
 console.log(jim.greet('bob'));
@@ -42,6 +34,7 @@ const game = {
 //do not have more than one interval  
 
 };
+// ${start}
 
 // listeners... only use methods down here outside of the game function, use these clicks etc on the methods above
 
