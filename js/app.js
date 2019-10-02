@@ -7,9 +7,9 @@ class Tamagotchi {
 			this.boredom = Math.floor(Math.random() * 10) +1;
 			this.name = name;
 			this.age = 0;
-			// this.time = 10;
 			
 		}
+
 	}
 
 
@@ -20,20 +20,21 @@ const game = {
 
 	endGame: 10,
 
+	newTom: null, 
 
 	createTamagotchi(name){
-		const newTom = new Tamagotchi(name);
-		console.log(newTom);
-		$('.hunger').text('Hunger: ')
-		$('.hunger').append(newTom.hunger)
-		$('.sleepiness').text('Sleepiness level: ')
-		$('.sleepiness').append(newTom.sleepiness)
-		$('.boredom').text('Boredom level: ')
-		$('.boredom').append(newTom.boredom)
-		$('.timer').text('Timer: ')
-		$('.timer').append(newTom.time)
+		this.newTom = new Tamagotchi(name);
+		console.log(this.newTom);
 
-		// $('.timer').append(this.timer())
+
+		$('.hunger').text('Hunger level: ')
+		$('.hunger').append(this.newTom.hunger)
+		$('.sleepiness').text('Sleepiness level: ')
+		$('.sleepiness').append(this.newTom.sleepiness)
+		$('.boredom').text('Boredom level: ')
+		$('.boredom').append(this.newTom.boredom)
+		$('.timer').text('Timer: ')
+		$('.timer').append(this.newTom.time)
 
 		game.startTimer();
 	},
@@ -49,30 +50,32 @@ const game = {
 			} else {
 				this.time += 1
 			}
+
+			this.feedingTime();
+
+
+
 			//update the time on the DOM
 			$timer.text(`Timer: ${this.time}s`)
-		},1000)
+		}, 1000)
 
 	},
-	// prompt the player by welcoming them to the game and asking they input a name for the Tomagotchi.
-	// userPrompt(){
-
-	// 	let userInput = prompt("Welcome to your Tamagotchi! What would you like to name you're pet?")
-	// 	return new Tamagotchi(userInput, 'green')
-
-	// },
-
-	// create a function that will start incrementing the time up to 5 minutes. This will be part of the feeding, sleeping and playing functions as well. Every 15 seconds the tomagotchi's levels will go up, if they get to 10 then it dies.
-
-
-
-
-
-
 
 	// create a feeding function. This will be used with an on.click() method down below, outside of the game. Everytime it's clicked the Tomagotchi's hungar level will go up by 1
-	feedingTime(){
-		$('health-stats').append()
+	// if it's been the right amount of time to make him hungrier
+			// this.time
+			// increase hunger level
+	feedingTime(feed){
+		if(this.time % 2 === 0){
+			console.log('Feed me!');
+			let $hunger = $('.hunger')
+			$hunger.text('Hunger level: ' + (this.newTom.hunger --));
+			console.log(this.newTom.hunger);
+		} if(this.newTom.hunger === 0){
+			console.log('You lost!');
+			this.died();
+		}
+
 	},
 
 	lightsOut(){
@@ -81,9 +84,14 @@ const game = {
 
 	play(){
 
+	},
+
+	died(){
+		if(this.newTom.hunger === 0 || this.newTom.hunger === 0 || this.newTom.hunger === 0){
+			console.log('Your pet died!');
+			this.newTom.time = 0
+		}
 	}
-
-
 };
 
 // Event listeners --------------------------
@@ -93,15 +101,12 @@ $('form').on('submit',(event) => {
 	const input = $('#input-box').val()
 	game.createTamagotchi(input);
 	// input.hide();
+
+$('.feed').on('click', (e) => {
+	console.log('button works!');
+	let $hunger = $('.hunger') 
+	$hunger.text('Hunger level: ' + (game.newTom.hunger += 1));
+})
+
 });
 
-
-
-
-// console.log(game.userPrompt());
-
-// ${start}
-
-// listeners... only use methods down here outside of the game function, use these clicks etc on the methods above
-
-// create a button 
