@@ -105,13 +105,13 @@ const game = {
 				this.newTom.sleepiness -= 1
 			}
 		}
-		// this.checkSleepiness();
+
 	},
 
 	ageAmount(){
 		if(this.time % 3 === 0){
 			this.newTom.age += 1;
-			// this.printStuff();
+
 		} else if(this.newTom.age === 5){
 			$('img').attr('class', 'picture').animate({height: '200', width: '700'}, 2000)
 		} else if(this.newTom.age === 10){
@@ -153,8 +153,6 @@ const game = {
 
 	lightsOut(){
 		
-		// this.newTom.sleepiness += 1
-		// this.printStuff()
 		let $tam = $('.lightOff');
 		$tam.css('background-color', 'black');
 		this.lightsOn = false;
@@ -173,15 +171,7 @@ const game = {
 	playWithMe(){
 		this.newTom.boredom += 1
 		this.printStuff()
-		// let $boredom = $('.boredom')
-		// $boredom.text('Boredom level: ' + (game.newTom.boredom += 1));
 	},
-
-	// checkSleepiness(){
-	// 	while (false){
-	// 		this.newTom.sleepiness += 1 ;
-	// 	}
-	// },
 
 	died(){
 		let $img2 = $('#in')
