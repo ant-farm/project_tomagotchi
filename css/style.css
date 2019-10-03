@@ -1,12 +1,14 @@
 body{
-	background-color: lightgreen;
-}
 
+	background-color: white;
+
+}
+.tamagotchi{
+	height: 400px;
+}
 .picture{
 	display: flex;
 	justify-content: center;
-	/*height: 200px;*/
-	/*margin: auto;*/
 
 }
 
@@ -15,3 +17,15 @@ body{
 	justify-content: center;
 	margin-top: 20px;
 }
+
+.startGame{
+	display: flex;
+	margin-left: 275px;
+	
+}
+
+.interaction{
+	display: flex;
+	margin-left: 275px;
+}
+
