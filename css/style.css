@@ -20,12 +20,14 @@ body{
 
 .startGame{
 	display: flex;
-	margin-left: 275px;
-	
+	/*margin-left: 275px;*/
+	justify-content: center;
+
 }
 
 .interaction{
 	display: flex;
-	margin-left: 275px;
+	/*margin-left: 275px;*/
+	justify-content: center;
 }
 
